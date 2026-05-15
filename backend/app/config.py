@@ -11,7 +11,7 @@ class Settings(BaseSettings):
     model_config = {
         "env_file": ".env",
         "env_file_encoding": "utf-8",
-        "extra": "ignore",  # 忽略 .env 中未声明的字段（如 Unsplash）
+        "extra": "ignore",
     }
 
     # LLM
@@ -30,6 +30,10 @@ class Settings(BaseSettings):
 
     # CORS
     cors_origins: str = "http://localhost:5173,http://localhost:3000"
+
+    # Unsplash
+    unsplash_access_key: str = ""
+    unsplash_secret_key: str = ""
 
     # 日志
     log_level: str = "INFO"

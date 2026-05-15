@@ -13,6 +13,7 @@ from .amap_tools import (
     amap_weather,
     amap_geocode,
 )
+from .unsplash_tools import unsplash_search_photo
 from .base import TaggedTool
 
 
@@ -65,6 +66,7 @@ tool_manager.register_many([
     amap_around_search,
     amap_weather,
     amap_geocode,
+    unsplash_search_photo,
 ])
 
 # 快捷导出

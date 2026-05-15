@@ -5,6 +5,7 @@
 上层 Agent 无需了解 API 细节。
 """
 
+import json
 import httpx
 from langchain_core.tools import tool
 
@@ -56,7 +57,7 @@ def amap_text_search(keywords: str, city: str, citylimit: bool = True) -> str:
     if not pois:
         return f"在{city}未找到与'{keywords}'相关的结果"
 
-    return str([{
+    return json.dumps([{
         "id": p.get("id", ""),
         "name": p.get("name", ""),
         "type": p.get("type", ""),
@@ -64,7 +65,7 @@ def amap_text_search(keywords: str, city: str, citylimit: bool = True) -> str:
         "location": p.get("location", ""),
         "tel": p.get("tel", ""),
         "rating": (p.get("biz_ext") or {}).get("rating", ""),
-    } for p in pois])
+    } for p in pois], ensure_ascii=False)
 
 
 # ============================================================
@@ -106,7 +107,7 @@ def amap_around_search(
         return f"周边搜索失败: {data.get('info', '未知错误')}"
 
     pois = data.get("pois", [])
-    return str([{
+    return json.dumps([{
         "id": p.get("id", ""),
         "name": p.get("name", ""),
         "type": p.get("type", ""),
@@ -114,7 +115,7 @@ def amap_around_search(
         "location": p.get("location", ""),
         "distance": p.get("distance", ""),
         "rating": (p.get("biz_ext") or {}).get("rating", ""),
-    } for p in pois])
+    } for p in pois], ensure_ascii=False)
 
 
 # ============================================================
@@ -151,7 +152,7 @@ def amap_weather(city: str) -> str:
     if not forecasts:
         return f"未找到{city}的天气数据"
 
-    return str([{
+    return json.dumps([{
         "date": c.get("date", ""),
         "day_weather": c.get("dayweather", ""),
         "night_weather": c.get("nightweather", ""),
@@ -159,7 +160,7 @@ def amap_weather(city: str) -> str:
         "night_temp": c.get("nighttemp", ""),
         "wind_direction": c.get("daywind", ""),
         "wind_power": c.get("daypower", ""),
-    } for c in forecasts[0].get("casts", [])])
+    } for c in forecasts[0].get("casts", [])], ensure_ascii=False)
 
 
 # ============================================================
@@ -195,11 +196,11 @@ def amap_geocode(address: str, city: str = "") -> str:
     if not geocodes:
         return f"未找到'{address}'的坐标"
 
-    return str([{
+    return json.dumps([{
         "location": g.get("location", ""),
         "adcode": g.get("adcode", ""),
         "formatted_address": g.get("formatted_address", ""),
-    } for g in geocodes])
+    } for g in geocodes], ensure_ascii=False)
 
 
 # ============================================================
