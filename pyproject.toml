@@ -12,5 +12,7 @@ dependencies = [
     "langgraph>=0.5",
     "pydantic>=2",
     "pydantic-settings>=2",
+    "pytest>=9.0.3",
+    "pytest-cov>=7.1.0",
     "uvicorn>=0.20",
 ]
